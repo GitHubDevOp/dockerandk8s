@@ -1,0 +1,35 @@
+version: "3.1"
+services:
+
+ web-app:
+  image: nginx
+  ports:
+  - "80"
+  volumes:
+  - ./my-app:/usr/share/nginx/html
+  networks:
+  - My-Net
+  links:
+  - db-app
+  restart: always
+
+ db-app:
+  image: mariadb
+  restart: always
+  ports:
+  - "3306"
+  volumes:
+  - ./my-db:/var/lib/mysql
+  environment:
+  - MYSQL_ROOT_PASSWORD=redhat
+  - MYSQL_ROOT_HOST=root
+  - MYSQL_DATABASE=mydatabase
+  networks:
+  - My-Net
+
+volumes:
+ my-app:
+ my-db:
+networks:
+ My-Net:
+
